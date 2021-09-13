@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { defaultFields, STEPS } from './utils/constants';
+import { FormFieldsContext } from './utils/contexts/FormFieldsContext';
+import { FormStepContext } from './utils/contexts/FormStepContext';
+import { getCurrentForm } from './utils/helpers';
+import { ApplicationRootStyles } from './utils/styles';
 
 function App() {
+  const [step, setStep] = useState(STEPS.CONTACT);
+  const [fields, setFields] = useState(defaultFields);
+
+  const updateFields = (field, value) => {
+    const newFields = { ...fields };
+    newFields[field] = value;
+    setFields(newFields);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FormStepContext.Provider value={{ step, setStep }}>
+      <FormFieldsContext.Provider value={{ fields, updateFields }}>
+        <ApplicationRootStyles>{getCurrentForm(step)}</ApplicationRootStyles>
+      </FormFieldsContext.Provider>
+    </FormStepContext.Provider>
   );
 }
 
