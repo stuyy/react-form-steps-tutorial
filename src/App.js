@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Progress } from './components/Progress';
 import { defaultFields, STEPS } from './utils/constants';
 import { FormFieldsContext } from './utils/contexts/FormFieldsContext';
 import { FormStepContext } from './utils/contexts/FormStepContext';
@@ -18,7 +19,9 @@ function App() {
   return (
     <FormStepContext.Provider value={{ step, setStep }}>
       <FormFieldsContext.Provider value={{ fields, updateFields }}>
-        <ApplicationRootStyles>{getCurrentForm(step)}</ApplicationRootStyles>
+        <ApplicationRootStyles>
+          <div>{getCurrentForm(step)}</div>
+        </ApplicationRootStyles>
       </FormFieldsContext.Provider>
     </FormStepContext.Provider>
   );
